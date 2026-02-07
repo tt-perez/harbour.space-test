@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
-
+// interfaces
 export interface ApiResponse {
   id: number;
   scope: string;
@@ -31,6 +31,25 @@ export interface Scholarship {
   position: string;
 }
 
+export interface ScholarshipData {
+  about: AboutItem[];
+  total_value: number;
+  tuition: number;
+  remaining: number;
+  stipend_per_year: number;
+  stipend_per_month: number;
+  study_commitment: number;
+  study_commitment_text: string;
+  work_commitment: number;
+  internship_commitment_text: string;
+}
+
+export interface AboutItem {
+  type: string;
+  data: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +61,7 @@ export class ScholarshipService {
   getScholarship(): Observable<Scholarship> {
     return this.http.get<ApiResponse>(this.apiUrl).pipe(
       map(response => {
-        console.log('Datos extraídos:', response.scholarship);
+        //console.log('Datos extraídos:', response.scholarship);
         return response.scholarship;
       })
     );
