@@ -1,5 +1,5 @@
 
-<section class="px-2 md:px-4 lg:px-8 max-w-7xl mx-auto">
+<section class="px-2 md:px-4 lg:px-8 max-w-7xl mx-auto mt-40 mb-0">
   <div *ngIf="isLoading" class="flex justify-center py-8 text-xl">
     <p>Loading scholarship information...</p>
   </div>
@@ -14,31 +14,31 @@
         <img src="/frame.png" alt="frame" class="absolute z-[-1] w-[90vw] md:w-auto" />
         <img src="/guy.png" alt="guy" class="rounded-full w-[70vw] md:w-auto z-10" />
       </div>
-      <div class="md:mx-10 md:bg-transparent bg-gray-100 md:w-full w-[100vw] ml-[-2rem] md:ml-0 md:h-auto h-[80vh] md:mt-auto mt-[-18vh]">
-        <div class="bg-white mx-5 pt-60 px-4 border-[#535353] border-[1px] md:border-0 rounded-b md:mt-0 mt-[-1rem]">
-          <p class="text-[#685DC5] md:text-5xl text-4xl text-left">
+      <div class="md:mx-10 md:bg-transparent bg-[#685DC5] md:w-full w-auto md:ml-0 md:h-auto h-[80vh] md:mt-auto mt-[-18vh]">
+        <div class="bg-white mx-5 pt-60 px-4 border-[#E6E6E6] border-[1px] md:border-0 rounded-b md:mt-0 mt-[-1rem]">
+          <p class="text-[#685DC5] md:text-5xl text-4xl text-left font-medium">
             About the
           </p>
-          <p class="text-[#685DC5] md:text-5xl text-4xl text-left">
+          <p class="text-[#685DC5] md:text-5xl text-4xl text-left font-medium">
             apprenticeships
           </p>
-          <p class="mt-20 text-left text-lg text-[#535353]">
+          <p class="mt-20 text-left text-lg text-[#535353] font-light">
             {{ scholarshipData.about?.[0]?.data }}
           </p>
         </div>
       </div>
     </div>
 
-    <div class="mt-[20vh] grid grid-cols-1 grid-rows-4 md:grid-cols-3 md:grid-rows-2 md:gap-4 w-full h-auto">
-      <div class="md:col-span-1 md:row-span-3 md:flex md:flex-col justify-between md:border-[#DADADA] md:border-[2px] rounded-md p-10 text-left w-full">
+    <div class="mt-12 md:mt-[20vh] grid grid-cols-1 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-2 md:gap-6 w-full h-auto">
+      <div class="md:col-span-1 md:row-span-3 md:flex md:flex-col justify-between md:border-[2px] md:border-[#DADADA] md:rounded-md p-10 text-left w-full">
         <div>
           <p class="text-[#685DC5] text-xl font-medium">Scholarship value</p>
-          <p class="md:text-6xl text-2xl font-light md:mt-10 text-[#535353]">
+          <p class="md:text-6xl text-2xl font-light md:mt-10 text-[#535353] text-left">
             €{{ formatNumber(scholarshipData.total_value) }}
           </p>
         </div>
         <div class="h-[2px] bg-slate-200 my-5 md:block hidden"></div>
-        <div class="grid grid-cols-2 gap-8 py-10 md:py-0">
+        <div class="grid grid-cols-2 gap-8 py-10 md:py-0 border-t border-slate-200 md:border-t-0">
           <div>
             <div class="flex">
               <p class="text-[#685DC5] md:text-xl text-2xl font-medium">
@@ -73,30 +73,30 @@
       </div>
 
       <app-info-cell
-        title="Study commitment" 
-        [bigText]="`${scholarshipData.study_commitment} hours / day`"
-        cssClass="mb-5 text-[#535353]">
+        title="Study commitment"
+        [bigText]="scholarshipData.study_commitment + ' hours / day'"
+        cssClass="mb-0 text-[#535353]">
         <div class="w-10 h-[2px] bg-[#DADADA] my-5"></div>
-        <p class="font-light text-[#535353]">{{ scholarshipData.study_commitment_text }}</p>
+        <p class="font-light text-[#535353] text-left">{{ scholarshipData.study_commitment_text }}</p>
       </app-info-cell>
 
-      <app-info-cell 
-        title="Work commitment" 
-        [bigText]="`${scholarshipData.work_commitment} hours / day`"
-        cssClass="mb-5 text-[#535353]">
+      <app-info-cell
+        title="Work commitment"
+        [bigText]="scholarshipData.work_commitment + ' hours / day'"
+        cssClass="mb-0 text-[#535353] mt-[-8.5rem] md:mt-0">
         <div class="w-10 h-[2px] bg-slate-200 my-5"></div>
-        <p class="font-light text-[#535353]">
+        <p class="font-light text-[#535353] text-left">
           {{ scholarshipData.internship_commitment_text }}
         </p>
       </app-info-cell>
       
-      <div class="md:col-span-2 row-span-1 flex flex-col mt-[-0.5rem]">
+      <div class="md:col-span-2 row-span-1 flex flex-col mt-[-15rem] md:mt-0 justify-start">
         <div class="h-[2px] w-full bg-[#DADADA] flex items-center justify-center">
           <p class="bg-white w-auto px-5 font-medium text-[#535353]">
             GRADUATION
           </p>
         </div>
-        <div class="border-[#DADADA] border-[2px] rounded-md p-10 text-left mt-10 h-full">
+        <div class="border-[2px] border-[#DADADA] rounded-md p-10 text-left mt-4 h-auto md:h-full mb-0">
           <p class="text-[#685DC5] text-xl font-medium ">
             A full-time contract
           </p>
@@ -104,7 +104,7 @@
             1 Year / Full-Time
           </p>
           <div class="w-10 h-[2px] bg-slate-200 my-5"></div>
-          <p class="text-[#535353]">
+          <p class="text-[#535353] text-left font-light">
             You'll be guaranteed a 1 year contract with SCG upon graduation.
           </p>
         </div>

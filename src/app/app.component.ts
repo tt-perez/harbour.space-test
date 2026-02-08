@@ -3,11 +3,15 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './components/nav-bar.component/nav-bar.component';
 import { ScholarshipDetailComponent } from './components/nav-bar.component/body/scholarship-details.component/scholarship-details.component';
 import { ApprenticeshipInfoSectionComponent } from './components/nav-bar.component/body/apprenticeship-info-section.component/apprenticeship-info-section.component';
+import { TestimonialComponent } from './components/nav-bar.component/body/testimonial.component/testimonial.component';
+import { FaqSectionComponent } from './components/nav-bar.component/body/faq-section.component/faq-section.component';
+
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ScholarshipDetailComponent,ApprenticeshipInfoSectionComponent],
+  imports: [RouterOutlet, NavbarComponent, ScholarshipDetailComponent, ApprenticeshipInfoSectionComponent, TestimonialComponent, FaqSectionComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

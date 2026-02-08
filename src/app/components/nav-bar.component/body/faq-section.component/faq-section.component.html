@@ -1,0 +1,80 @@
+<section class=" md:mt-[120vh] h-screen px-2 md:px-4 lg:px-8 max-w-7xl mx-auto">
+  <div class="flex justify-between flex-wrap mb-10">
+    <div>
+      <p class="text-[#685DC5] text-5xl w-[70%] text-left font-medium my-5">
+        Frequently asked questions
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 grid-cols-1 items-center">
+      <p class="text-[#6A6A6A] text-left md:text-right mx-5 my-5">
+        Filter by:
+      </p>
+      <select
+        class="border-2 border-[#DADADA] rounded-full px-6 py-3 text-[#685DC5] bg-white"
+        [value]="selectedType"
+        (change)="onTypeChange($event)"
+      >
+        <option *ngFor="let type of types" [value]="type" class="text-[#685DC5] ">{{ type }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-center py-8 text-xl">
+    <p>Loading FAQ information...</p>
+  </div>
+
+  <div *ngIf="error" class="flex justify-center py-8 text-xl text-red-500">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && !error">
+    <div
+      *ngFor="let item of filteredFaqs; let i = index"
+      class="border-t-[1px] border-b-[1px] border-[#E6E6E6] md:grid md:grid-cols-2 grid-cols-1 text-left p-10 w-full"
+    >
+      <p class="text-[#685DC5] text-xl px-5 font-medium hidden md:block">
+        {{ item.type }}
+      </p>
+      <div class=" text-xl flex justify-between w-full text-[#535353]">
+        <div class="pr-10">
+          <p class="mb-3">
+            {{ item.question }}
+          </p>
+          <div
+            class="overflow-hidden transition-all duration-1000 ease-in-out"
+            [ngClass]="{
+              'max-h-[1000px]': isOpen(i),
+              'max-h-0': !isOpen(i)
+            }"
+          >
+            <p class="font-light text-xl my-5" *ngFor="let answer of item.answer">
+              {{ answer.data }}
+            </p>
+          </div>
+        </div>
+        <div>
+          <button
+            class="relative overflow-hidden rounded-full border-2 w-14 h-14 flex items-center justify-center text-3xl duration-300"
+            [ngClass]="{ 'text-white': isOpen(i), 'text-slate-300': !isOpen(i) }"
+            (click)="toggle(i)"
+          >
+            <span
+              class="inline-block transition-transform duration-300"
+              [ngClass]="{ 'rotate-0': isOpen(i), 'rotate-180': !isOpen(i) }"
+            >
+              <img *ngIf="isOpen(i)" src="/dash.png" alt="dash" />
+              <ng-container *ngIf="!isOpen(i)">+</ng-container>
+            </span>
+
+            <span
+              class="absolute inset-0 rounded-full bg-[#685DC5] transition-transform duration-500"
+              [ngClass]="{ 'scale-100': isOpen(i), 'scale-0': !isOpen(i) }"
+              [style.z-index]="-1"
+              [style.transitionTimingFunction]="'cubic-bezier(1, 1.5, 0.5, 1)'"
+            ></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

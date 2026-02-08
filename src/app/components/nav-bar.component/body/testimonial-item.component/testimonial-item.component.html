@@ -1,0 +1,31 @@
+<div class="group flex flex-col bg-white md:p-10 p-5 border-[2px] border-[#DADADA] rounded-lg mb-15">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <img
+        [src]="avatarSrc"
+        alt="avatar"
+        class="rounded-full transition-transform duration-500 group-hover:scale-125"
+      />
+      <div class="text-left ml-3">
+        <p>{{ name }}</p>
+        <p>{{ role }}</p>
+      </div>
+    </div>
+    <div>
+      <img [src]="linkedinSrc" alt="linkedin_link" />
+    </div>
+  </div>
+  <div class="flex justify-end mr-10">
+    <div class="bg-[#685DC5] text-white rounded-full px-10 py-3 font-medium text-lg">
+      Drag
+    </div>
+  </div>
+  <div class="text-left mt-10 md:mx-20 font-light pb-10 text-[#535353]">
+    <p class="text-2xl">
+      {{ testimonial }}
+    </p>
+    <p class="mt-5 text-lg">
+      {{ education }}
+    </p>
+  </div>
+</div>

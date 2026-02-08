@@ -1,0 +1,21 @@
+<div class="flex items-center justify-center flex-col relative md:absolute w-screen md:w-[100%] left-0 mt-0 md:mb-0 md:mt-[30vh]">
+  <div class="absolute mt-[-80vh] left-0 bg-[#685DC5] w-full block md:hidden">
+    <img src="/pattern_responsive.png" alt="pattern_responsive" />
+  </div>
+  <img src="/pattern.png" alt="pattern" class="md:block hidden absolute mt-[-50vh]" />
+
+  <swiper-container #swiper init="false" class="w-full flex justify-center">
+    <swiper-slide *ngFor="let _item of items" class="w-auto flex justify-center">
+      <app-testimonial-item></app-testimonial-item>
+    </swiper-slide>
+  </swiper-container>
+
+  <div class="navigation flex gap-2 justify-end mt-4 md:hidden">
+    <button class="border p-5 rounded-full" (click)="slidePrev()">
+      <img src="/left.png" alt="left_arrow" />
+    </button>
+    <button class="border p-5 rounded-full" (click)="slideNext()">
+      <img src="/right.png" alt="right_arrow" />
+    </button>
+  </div>
+</div>
