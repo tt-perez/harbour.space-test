@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScholarshipService, Scholarship, ScholarshipData } from '../../../../services/scholarship.service';
 import { InfoCellComponent } from './info-cell.component';
 
@@ -27,25 +27,19 @@ export class ApprenticeshipInfoSectionComponent implements OnInit {
   scholarshipData: CombinedScholarshipData | null = null;
   isLoading = true;
   error: string | null = null;
+  private destroyRef = inject(DestroyRef);
 
   constructor(private scholarshipService: ScholarshipService) { }
 
   ngOnInit(): void {
-    this.fetchScholarshipData();
-  }
-
-  private fetchScholarshipData(): void {
-    this.scholarshipService.getScholarship().subscribe({
-      next: (response: Scholarship) => {
-        this.scholarshipData = response;
-        this.isLoading = false;
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error = 'Failed to load scholarship data. Please try again later.';
-        this.isLoading = false;
-        console.error('Error fetching scholarship data:', err);
-      }
-    });
+    this.scholarshipService.state$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((state) => {
+        this.scholarshipData = state.data;
+        this.isLoading = state.loading;
+        this.error = state.error;
+      });
+    this.scholarshipService.loadScholarship();
   }
 
   formatNumber(value: number | undefined): string {

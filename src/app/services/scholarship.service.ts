@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, catchError, map, Observable, tap } from 'rxjs';
 
 // interfaces
 export interface ApiResponse {
@@ -15,7 +15,7 @@ export interface Scholarship {
   scope: string;
   id: number;
   name: string;
-  description: Array<{type: string, data: string}>;
+  description: Array<{ type: string; data: string }>;
   location: {
     id: number;
     name: string;
@@ -49,20 +49,64 @@ export interface AboutItem {
   data: string;
 }
 
+export interface ScholarshipState {
+  data: Scholarship | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export const SCHOLARSHIP_API_URL =
+  'https://pre-prod.harbour.space/api/v1/scholarship_pages/data-science-apprenticeship-zeptolab';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScholarshipService {
-  private apiUrl = 'https://pre-prod.harbour.space/api/v1/scholarship_pages/data-science-apprenticeship-zeptolab';
+  private stateSubject = new BehaviorSubject<ScholarshipState>({
+    data: null,
+    loading: false,
+    error: null
+  });
+  readonly state$ = this.stateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
+  loadScholarship(): void {
+    const current = this.stateSubject.value;
+    if (current.loading || current.data) {
+      return;
+    }
+
+    this.stateSubject.next({
+      data: current.data,
+      loading: true,
+      error: null
+    });
+
+    this.getScholarship()
+      .pipe(
+        tap((scholarship) => {
+          this.stateSubject.next({
+            data: scholarship,
+            loading: false,
+            error: null
+          });
+        }),
+        catchError(() => {
+          this.stateSubject.next({
+            data: null,
+            loading: false,
+            error: 'Failed to load scholarship data. Please try again later.'
+          });
+          return EMPTY;
+        })
+      )
+      .subscribe();
+  }
+
   getScholarship(): Observable<Scholarship> {
-    return this.http.get<ApiResponse>(this.apiUrl).pipe(
-      map(response => {
-        //console.log('Datos extraídos:', response.scholarship);
-        return response.scholarship;
-      })
+    return this.http.get<ApiResponse>(SCHOLARSHIP_API_URL).pipe(
+      map((response) => response.scholarship)
     );
-  }}
+  }
+}

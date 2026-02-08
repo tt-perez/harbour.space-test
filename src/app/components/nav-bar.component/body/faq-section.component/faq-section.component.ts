@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScholarshipService, Scholarship } from '../../../../services/scholarship.service';
 
 type FaqAnswer = {
@@ -36,11 +36,26 @@ export class FaqSectionComponent implements OnInit {
   selectedType = 'All';
 
   private openIndexes = new Set<number>();
+  private destroyRef = inject(DestroyRef);
 
   constructor(private scholarshipService: ScholarshipService) {}
 
   ngOnInit(): void {
-    this.fetchFaqs();
+    this.scholarshipService.state$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((state) => {
+        this.isLoading = state.loading;
+        this.error = state.error;
+
+        if (state.data) {
+          const data = state.data as ScholarshipWithFaqs;
+          const items = data.faqs?.items ?? [];
+          this.faqs = items;
+          this.types = ['All', ...Array.from(new Set(items.map(item => item.type).filter(Boolean)))];
+          this.applyFilter();
+        }
+      });
+    this.scholarshipService.loadScholarship();
   }
 
   onTypeChange(event: Event): void {
@@ -60,24 +75,6 @@ export class FaqSectionComponent implements OnInit {
 
   isOpen(index: number): boolean {
     return this.openIndexes.has(index);
-  }
-
-  private fetchFaqs(): void {
-    this.scholarshipService.getScholarship().subscribe({
-      next: (response: Scholarship) => {
-        const data = response as ScholarshipWithFaqs;
-        const items = data.faqs?.items ?? [];
-        this.faqs = items;
-        this.types = ['All', ...Array.from(new Set(items.map(item => item.type).filter(Boolean)))];
-        this.applyFilter();
-        this.isLoading = false;
-      },
-      error: (err: HttpErrorResponse) => {
-        this.error = 'Failed to load FAQ data. Please try again later.';
-        this.isLoading = false;
-        console.error('Error fetching FAQ data:', err);
-      }
-    });
   }
 
   private applyFilter(): void {
