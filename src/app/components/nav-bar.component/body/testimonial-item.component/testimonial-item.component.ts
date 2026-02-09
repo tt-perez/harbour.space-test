@@ -13,6 +13,6 @@ export class TestimonialItemComponent {
   @Input() testimonial =
     "This Fellowship was a turning point in my career. I wouldn't be where I am today without the financial support and experienced offered through the program.";
   @Input() education = 'Education \u00b7 B.A. Visual Design';
-  @Input() avatarSrc = '/placeholder.png';
-  @Input() linkedinSrc = '/linkedin.png';
+  @Input() avatarSrc = './placeholder.png';
+  @Input() linkedinSrc = './linkedin.png';
 }
