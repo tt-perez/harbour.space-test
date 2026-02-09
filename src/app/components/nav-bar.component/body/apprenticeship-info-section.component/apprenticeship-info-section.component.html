@@ -22,18 +22,18 @@
           <p class="text-[#685DC5] md:text-5xl text-4xl text-left font-medium">
             apprenticeships
           </p>
-          <p class="mt-20 text-left text-lg text-[#535353] font-light">
+          <p class="mt-10 text-left text-lg text-[#535353] font-light">
             {{ scholarshipData.about?.[0]?.data }}
           </p>
         </div>
       </div>
     </div>
 
-    <div class="mt-12 md:mt-[20vh] grid grid-cols-1 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-2 md:gap-6 w-full h-auto">
+    <div class="mt-25 md:mt-[20vh] grid grid-cols-1 grid-rows-4 md:grid-cols-3 md:grid-rows-2 gap-2 md:gap-6 w-full h-auto">
       <div class="md:col-span-1 md:row-span-3 md:flex md:flex-col justify-between md:border-[2px] md:border-[#DADADA] md:rounded-md p-10 text-left w-full">
         <div>
           <p class="text-[#685DC5] text-xl font-medium">Scholarship value</p>
-          <p class="md:text-6xl text-2xl font-light md:mt-10 text-[#535353] text-left">
+          <p class="md:text-5xl text-2xl font-light md:mt-10 text-[#535353] text-left">
             €{{ formatNumber(scholarshipData.total_value) }}
           </p>
         </div>
@@ -44,7 +44,7 @@
               <p class="text-[#685DC5] md:text-xl text-2xl font-medium">
                 Tuition
               </p>
-              <p class="text-[#685DC5] md:text-xl text-2xl font-medium md:block hidden">
+              <p class="text-[#685DC5] md:text-xl text-2xl font-medium md:hidden">
                 covered
               </p>
             </div>
