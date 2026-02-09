@@ -11,7 +11,7 @@ import { FaqSectionComponent } from './components/nav-bar.component/body/faq-sec
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ScholarshipDetailComponent, ApprenticeshipInfoSectionComponent, TestimonialComponent, FaqSectionComponent],
+  imports: [ NavbarComponent, ScholarshipDetailComponent, ApprenticeshipInfoSectionComponent, TestimonialComponent, FaqSectionComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
